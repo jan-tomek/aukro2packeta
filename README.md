@@ -1,6 +1,6 @@
-# aukro2packeta - Vezme email od Aukra a udìlá zásilku v Zásilkovnì a vytiskne štítek
+# aukro2packeta - Vezme email od Aukra a vytvoÅ™Ã­ zÃ¡silku v ZÃ¡silkovnÄ› a vytiskne Å¡tÃ­tek
 
-Vyuívá oficiální API pro eshopy [https://docs.packeta.com/docs/introduction](https://docs.packeta.com/docs/introduction), tzn. pro vyuítí musíte bıt registovanı eshop. 
+VyuÅ¾Ã­vÃ¡ oficiÃ¡lnÃ­ API pro eshopy [https://docs.packeta.com/docs/introduction](https://docs.packeta.com/docs/introduction), tzn. pro pouÅ¾itÃ­ musÃ­te bÃ½t registovanÃ½ eshop. 
 
 
 
