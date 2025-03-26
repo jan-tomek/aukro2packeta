@@ -15,7 +15,53 @@ class Packeta:
         self.api_password = api_password
 
         self.print_cmd_line = "C:\\Program Files\\IrfanView\\i_view64.exe"
-        self.print_ext_arg = "/print=ZDesigner GK420d - bile"
+        self.print_ext_arg = "/print=Label_printer"
+
+    def create_package(self, number, xml_vars):
+
+        print(xml_vars)
+
+        packeta_pack_req_xml = '''
+        <createPacket>
+        <apiPassword>{apiPassword}</apiPassword>
+          <packetAttributes>
+            <addressId>{addressId}</addressId>
+            <number>{number}</number>
+            <name>{name}</name>
+            <surname>{surname}</surname>
+            <email>{email}</email>
+            <phone>{phone}</phone>
+            <eshop>{eshop}</eshop>
+            <size>
+              <length>{length}</length>
+              <width>{width}</width>
+              <height>{height}</height>
+            </size>
+            <weight>{weight}</weight>
+            <value>{value}</value>
+          </packetAttributes>
+        </createPacket>
+        '''.format(**xml_vars)
+
+        print('XML for Packeta generated.')
+        if self.verbose: print("=" * 70 + packeta_pack_req_xml + "=" * 70)
+        if self.log: open(self.log + '/' + str(number) + '_rqst.xml', "w").write(packeta_pack_req_xml)
+
+        # sending get request and saving the response as response object
+        resp = requests.get(url='https://www.zasilkovna.cz/api/rest', headers={"Content-Type": "text/xml"},
+                            data=packeta_pack_req_xml.encode('utf-8'))
+        if self.verbose: print("=" * 70 + '\n' + resp.text + "=" * 70)
+        if self.log: open(self.log + '/' + str(number) + '_resp.xml', "w").write(resp.text)
+
+        if resp.status_code == 200:
+            print('HTTP Post OK')
+            barcode = re.search('%s(.*?)%s' % ('<barcode>', '</barcode>'), resp.text).group(1)
+            print('Barcode for package: ' + barcode)
+            return barcode
+
+        else:
+            print('Error sending API request to Packeta.')
+            exit(2)
 
     def download_barcode(self, bar_code, pdf_file_name):
 

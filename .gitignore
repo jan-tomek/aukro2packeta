@@ -15,3 +15,8 @@ lib64
 __pycache__
 
 /.idea/
+/_run.bat
+/_run_print.bat
+/branch.csv
+/log/
+/config_JTO.py
