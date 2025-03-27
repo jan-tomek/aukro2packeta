@@ -19,8 +19,6 @@ class Packeta:
 
     def create_package(self, number, xml_vars):
 
-        print(xml_vars)
-
         if xml_vars['type'] == 'misto':
             packeta_pack_req_xml = '''
             <createPacket>
