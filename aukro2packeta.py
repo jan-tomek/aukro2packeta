@@ -141,7 +141,9 @@ for num in data[0].split():
         address_url = None
         name_surname = re.search('%s(.*?)%s' % ('Jm.no a p..jmen.:', 'Adresa:'), textCore).group(1).strip()
         tgt_address = re.search('%s(.*?)%s' % ('Adresa:', 'E&#8209;mail:'), textCore).group(1).strip()
-        tgt_street = tgt_address.split('  ')[0].strip()
+        tgt_street_all = tgt_address.split('  ')[0].strip()
+        tgt_house_number = tgt_street_all.split(' ')[-1].strip()
+        tgt_street = tgt_street_all.replace(tgt_house_number, '').strip()
         tgt_rest = tgt_address.split('  ')[1].strip()
         tgt_zip = tgt_rest.split(',')[0].strip()
         tgt_city = tgt_rest.split(',')[1].strip()
@@ -191,7 +193,8 @@ if 'misto' in service:
         ])
 if 'adresu' in service:
     layout.append([
-    [sg.Text(_('Street'), size=(15, 1)), sg.InputText(tgt_street, size=(50, 1))],
+    [sg.Text(_('Street'), size=(15, 1)), sg.InputText(tgt_street, size=(25, 1))],
+    [sg.Text(_('House number'), size=(15, 1)), sg.InputText(tgt_house_number, size=(25, 1))],
     [sg.Text(_('City'), size=(15, 1)), sg.InputText(tgt_city, size=(25, 1))],
     [sg.Text(_('ZIP'), size=(15, 1)), sg.InputText(tgt_zip, size=(25, 1))],
     [sg.Text(_('Country'), size=(15, 1)), sg.InputText(tgt_cntry, size=(25, 1))],
@@ -253,26 +256,31 @@ if 'misto' in service:
     weight = float(values[10].replace(',','.'))
     value = int(values[11])
 
+    xml_vars = {'type': 'misto', 'apiPassword': api_password, 'addressId': addressId, 'number': number, 'name': name, 'surname': surname,
+                'email': tgt_email, 'phone': tgt_phone, 'eshop': eshop, 'length': length, 'width': width,
+                'height': height, 'weight': weight, 'value': value}
+
 if 'adresu' in service:
     number = int(values[0])
     tgt_street = values[1]
-    tgt_city = values[2]
-    tgt_zip = values[3]
-    tgt_cntry = values[4]
-    name = values[5]
-    surname = values[6]
-    tgt_email = values[7]
-    tgt_phone = values[8].replace('(', '').replace(')', '')
-    eshop = values[9]
-    length = int(values[10]) * 10
-    width = int(values[11]) * 10
-    height = int(values[12]) * 10
-    weight = float(values[13].replace(',','.'))
-    value = int(values[14])
+    tgt_house_number = values[2]
+    tgt_city = values[3]
+    tgt_zip = values[4]
+    tgt_cntry = values[5]
+    name = values[6]
+    surname = values[7]
+    tgt_email = values[8]
+    tgt_phone = values[9].replace('(', '').replace(')', '')
+    eshop = values[10]
+    length = int(values[11]) * 10
+    width = int(values[12]) * 10
+    height = int(values[13]) * 10
+    weight = float(values[14].replace(',','.'))
+    value = int(values[15])
 
-xml_vars = { 'apiPassword':api_password, 'addressId':addressId, 'number':number, 'name':name, 'surname':surname, 'email':tgt_email, 'phone':tgt_phone, 'eshop':eshop, 'length':length, 'width':width, 'height':height, 'weight':weight, 'value':value}
-print(xml_vars)
-exit(1)
+    xml_vars = {'type': 'adresa', 'apiPassword': api_password, 'number': number, 'name': name, 'surname': surname, 'street': tgt_street,
+                'house_number': tgt_house_number, 'city': tgt_city, 'zip': tgt_zip, 'country': tgt_cntry,'email': tgt_email, 'phone': tgt_phone,
+                'eshop': eshop, 'length': length, 'width': width, 'height': height, 'weight': weight, 'value': value}
 
 print(_('Dialog data validated.'))
 if verbose: print("="*70+'\n'+str(xml_vars)+'\n'+"="*70)

@@ -21,27 +21,54 @@ class Packeta:
 
         print(xml_vars)
 
-        packeta_pack_req_xml = '''
-        <createPacket>
-        <apiPassword>{apiPassword}</apiPassword>
-          <packetAttributes>
-            <addressId>{addressId}</addressId>
-            <number>{number}</number>
-            <name>{name}</name>
-            <surname>{surname}</surname>
-            <email>{email}</email>
-            <phone>{phone}</phone>
-            <eshop>{eshop}</eshop>
-            <size>
-              <length>{length}</length>
-              <width>{width}</width>
-              <height>{height}</height>
-            </size>
-            <weight>{weight}</weight>
-            <value>{value}</value>
-          </packetAttributes>
-        </createPacket>
-        '''.format(**xml_vars)
+        if xml_vars['type'] == 'misto':
+            packeta_pack_req_xml = '''
+            <createPacket>
+            <apiPassword>{apiPassword}</apiPassword>
+              <packetAttributes>
+                <addressId>{addressId}</addressId>
+                <number>{number}</number>
+                <name>{name}</name>
+                <surname>{surname}</surname>
+                <email>{email}</email>
+                <phone>{phone}</phone>
+                <eshop>{eshop}</eshop>
+                <size>
+                  <length>{length}</length>
+                  <width>{width}</width>
+                  <height>{height}</height>
+                </size>
+                <weight>{weight}</weight>
+                <value>{value}</value>
+              </packetAttributes>
+            </createPacket>
+            '''.format(**xml_vars)
+
+        if xml_vars['type'] == 'adresa':
+            packeta_pack_req_xml = '''
+            <createPacket>
+            <apiPassword>{apiPassword}</apiPassword>
+              <packetAttributes>
+                <street>{street}</street>
+                <houseNumber>{house_number}</houseNumber>
+                <city>{city}</city>
+                <zip>{zip}</zip>
+                <number>{number}</number>
+                <name>{name}</name>
+                <surname>{surname}</surname>
+                <email>{email}</email>
+                <phone>{phone}</phone>
+                <eshop>{eshop}</eshop>
+                <size>
+                  <length>{length}</length>
+                  <width>{width}</width>
+                  <height>{height}</height>
+                </size>
+                <weight>{weight}</weight>
+                <value>{value}</value>
+              </packetAttributes>
+            </createPacket>
+            '''.format(**xml_vars)
 
         print('XML for Packeta generated.')
         if self.verbose: print("=" * 70 + packeta_pack_req_xml + "=" * 70)
