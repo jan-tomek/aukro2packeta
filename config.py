@@ -14,7 +14,7 @@ PRINT_EXT_ARG = "/print=label printer"
 
 # Default package parameters not present in email
 DEF_LENGTH = 50
-DEF_WIDTH = 50
+DEF_WIDTH = 30
 DEF_HEIGHT = 5
 DEF_WEIGHT = 9.99
 DEF_VALUE = 500
